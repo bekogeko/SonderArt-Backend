@@ -8,11 +8,26 @@ datasource db {
 }
 
 model event {
-  id         Int      @id @default(autoincrement())
-  name       String   @db.VarChar(255)
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  eventTime  DateTime @default(now()) @db.Timestamp(6)
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+
+  imageUrl   String
+  eventTime  String
   publisher  String   @db.VarChar(255)
-  location   String
   city       String   @db.VarChar(255)
+  location   String
+  created_at DateTime @default(now())
+
+  applications Application[]
+}
+
+model Application {
+  fullName String
+  email    String
+  imageUrl String
+
+  eventId Int
+  event   event @relation(fields: [eventId], references: [id])
+
+  @@id([eventId, email])
 }

@@ -16,13 +16,14 @@ export async function GET(request: Request) {
 
 export async function PUT(request: Request) {
 
-  // request.headers.
+  // request.headers should be there
   await auth.protect();
 
+  // get user
   const user = (await auth());
 
-  if (user.userId == null){
-    return new Response("Unauthorized", { status: 401 });
+  if(user.userId == null){
+    return new Response("No user", { status: 400 });
   }
 
   // body with name
@@ -37,11 +38,12 @@ export async function PUT(request: Request) {
   const result = await prisma.event.create({
     data: {
       name: event.name,
-      eventTime: new Date(event.eventTime),
+      eventTime: event.eventTime,
       created_at: new Date(),
       publisher: user.userId,
       city: event.city,
       location: event.location,
+      imageUrl: event.imageUrl || "https://firebasestorage.googleapis.com/v0/b/sonderart-1be4d.firebasestorage.app/o/IMG_user_2slk0bCjiW8cUUTjg6iR1aJmjZ5.jpeg?alt=media&token=7b33381c-c4f5-4710-8f71-2508e7e7560c",
     }
   });
 
