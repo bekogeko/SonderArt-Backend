@@ -33,6 +33,10 @@ export async function PUT(request: NextRequest) {
 
   const data = await request.json();
 
+  if(data.eventId == null || data.email == null || data.imageUrl == null ||fullName==null){
+    return new Response("data i snecessary");
+  }
+
   // request.headers.
   await auth.protect();
   const user = (await auth());
