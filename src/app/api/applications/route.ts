@@ -8,10 +8,19 @@ export async function GET(request: NextApiRequest) {
     return new Response("No event id", { status: 400 });
   }
 
+  await auth.protect();
+
   // const events = await db.select().from(eventTable);
-  const applications = await prisma.application.findMany({where:{
-    eventId: request.body.eventId
-  }});
+  const applications = await prisma.application.findMany({
+    select:{
+      email:true,
+      fullName:true,
+      imageUrl:true
+    },
+    where:{
+      eventId: request.body.eventId
+    }
+  });
 
   return new Response(JSON.stringify(applications), {
     headers: {
@@ -46,8 +55,13 @@ export async function PUT(request: NextApiRequest) {
       email: request.body.email,
       imageUrl: request.body.imageUrl,
       fullName: request.body.fullName,
+    },
+    omit:{
+      eventId:true
     }
   });
+
+
 
   return new Response(JSON.stringify(application), {
     headers: {
