@@ -1,11 +1,10 @@
-import db from "@/db";
-import { eventTable } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
+import { prisma } from "@/db";
 
 export async function GET(request: Request) {
 
   // const events = await db.select().from(eventTable);
-  const events = await db.select().from(eventTable);
+  const events = await prisma.event.findMany({});
 
   console.log(request);
   // send json
