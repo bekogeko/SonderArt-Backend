@@ -21,14 +21,10 @@ export async function POST(request: Request) {
 
   const user = (await auth());
 
-  // const canHeCreateEvents = user.orgPermissions?.some((perm) => perm === "org:feature:event_create");
-
-  // if(!canHeCreateEvents){
-  //   return new Response("You are not allowed to create events", {
-  //     status: 403
-  //   });
-  // }
-
+  if (user.userId == null){
+    return new Response("Unauthorized", { status: 401 });
+  }
+  
   // body with name
   // with eventTime
   // with created_at
@@ -41,7 +37,7 @@ export async function POST(request: Request) {
   const result = await prisma.event.create({
     data: {
       name: event.name,
-      eventTime: new Date(event.eventTime),
+      eventTime: event.eventTime,
       created_at: new Date(),
       publisher: user.userId,
       city: event.city,
