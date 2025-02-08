@@ -37,7 +37,7 @@ export async function PUT(request: Request) {
   const result = await prisma.event.create({
     data: {
       name: event.name,
-      eventTime: event.eventTime,
+      eventTime: new Date(event.eventTime),
       created_at: new Date(),
       publisher: user.userId,
       city: event.city,
