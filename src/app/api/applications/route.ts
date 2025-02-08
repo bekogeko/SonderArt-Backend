@@ -5,10 +5,9 @@ import { NextRequest } from "next/server";
 export async function GET(request: NextRequest) {
   const data = await request.json();
 
-  if(data == null){
-    return new Response("No event id", { status: 400 });
+  if(data.eventId == null){
+    return new Response("No event Id");
   }
-
   await auth.protect();
 
   // const events = await db.select().from(eventTable);
@@ -32,7 +31,7 @@ export async function GET(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
 
-  const data =await request.json();
+  const data = await request.json();
 
   // request.headers.
   await auth.protect();
