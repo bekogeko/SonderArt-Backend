@@ -4,7 +4,10 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function GET(request: Request) {
 
+  // const events = await db.select().from(eventTable);
   const events = await db.select().from(eventTable);
+
+  // send json
   return new Response(JSON.stringify(events), {
     headers: {
       "Content-Type": "application/json;",

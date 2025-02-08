@@ -4,19 +4,9 @@ export const eventTable = pgTable("event", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
 
-  created_at: timestamp().notNull(),
+  created_at: timestamp().notNull().defaultNow(),
 
-  eventTime : timestamp().notNull(),
+  eventTime: timestamp().notNull().defaultNow(),
 
-  // Todo: fix code
-  publisher_id: varchar({length:64}).notNull(),
-});
-
-export const userTable = pgTable("user", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 255 }).notNull(),
-
-  created_at: timestamp().notNull(),
-
-  email: varchar({ length: 255 }).notNull(),
+  publisher: varchar({ length: 255 }).notNull(),
 });
