@@ -50,11 +50,6 @@ export async function PUT(request: NextRequest) {
   const application = await prisma.application.create({
     data: {
       eventId: data.eventId,
-      event: {
-        connect: {
-          id: data.eventId
-        }
-      },
       email: data.email,
       imageUrl: data.imageUrl,
       fullName: data.fullName,
