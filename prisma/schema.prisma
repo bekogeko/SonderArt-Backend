@@ -13,4 +13,6 @@ model event {
   created_at DateTime @default(now()) @db.Timestamp(6)
   eventTime  DateTime @default(now()) @db.Timestamp(6)
   publisher  String   @db.VarChar(255)
+  location   String
+  city       String   @db.VarChar(255)
 }

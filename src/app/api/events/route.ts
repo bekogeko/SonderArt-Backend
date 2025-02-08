@@ -5,7 +5,6 @@ export async function GET(request: Request) {
 
   // const events = await db.select().from(eventTable);
   const events = await prisma.event.findMany({});
-
   console.log(request);
   // send json
   return new Response(JSON.stringify(events), {
@@ -18,14 +17,21 @@ export async function GET(request: Request) {
 export async function PUT(request: Request) {
 
   // request.headers.
+  const user = await auth();
 
-  const canHeCreateEvents = (await auth()).orgPermissions?.some((perm) => perm === "org:feature:event_create");
-
-  if(!canHeCreateEvents){
+  if(user.userId == null){
     return new Response("You are not allowed to create events", {
       status: 403
     });
   }
+
+  // const canHeCreateEvents = user.orgPermissions?.some((perm) => perm === "org:feature:event_create");
+
+  // if(!canHeCreateEvents){
+  //   return new Response("You are not allowed to create events", {
+  //     status: 403
+  //   });
+  // }
 
   // body with name
   // with eventTime
@@ -36,10 +42,16 @@ export async function PUT(request: Request) {
 
   console.log(event);
   
-  const result = await db.insert(eventTable).values({
-    name: event.name,
-    publisher: (await auth()).userId as string,
-  }).returning();
+  const result = await prisma.event.create({
+    data: {
+      name: event.name,
+      eventTime: new Date(event.eventTime),
+      created_at: new Date(),
+      publisher: user.userId,
+      city: event.city,
+      location: event.location,
+    }
+  });
 
 
   
