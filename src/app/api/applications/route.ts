@@ -1,10 +1,11 @@
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/db";
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
-export async function GET(request: NextApiRequest) {
-  
-  if(request.body == null){
+export async function GET(request: NextRequest) {
+  const data = await request.json();
+
+  if(data == null){
     return new Response("No event id", { status: 400 });
   }
 
@@ -18,7 +19,7 @@ export async function GET(request: NextApiRequest) {
       imageUrl:true
     },
     where:{
-      eventId: request.body.eventId
+      eventId: data.eventId
     }
   });
 
@@ -29,7 +30,9 @@ export async function GET(request: NextApiRequest) {
   });
 }
 
-export async function PUT(request: NextApiRequest) {
+export async function PUT(request: NextRequest) {
+
+  const data =await request.json();
 
   // request.headers.
   await auth.protect();
@@ -40,21 +43,21 @@ export async function PUT(request: NextApiRequest) {
   }
 
 
-  if(request.body == null){
+  if(data == null){
     return new Response("No event id", { status: 400 });
   }
 
   const application = await prisma.application.create({
     data: {
-      eventId: request.body.eventId,
+      eventId: data.eventId,
       event: {
         connect: {
-          id: request.body.eventId
+          id: data.eventId
         }
       },
-      email: request.body.email,
-      imageUrl: request.body.imageUrl,
-      fullName: request.body.fullName,
+      email: data.email,
+      imageUrl: data.imageUrl,
+      fullName: data.fullName,
     },
     omit:{
       eventId:true
