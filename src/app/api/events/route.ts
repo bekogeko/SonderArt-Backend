@@ -4,7 +4,7 @@ import { prisma } from "@/db";
 export async function GET(request: Request) {
 
   // const events = await db.select().from(eventTable);
-  const events = await prisma.event.findMany({});
+  const events = await prisma.event.findMany();
   console.log(request);
   // send json
   return new Response(JSON.stringify(events), {
@@ -14,16 +14,12 @@ export async function GET(request: Request) {
   });
 }
 
-export async function PUT(request: Request) {
+export async function POST(request: Request) {
 
   // request.headers.
-  const user = await auth();
+  await auth.protect();
 
-  if(user.userId == null){
-    return new Response("You are not allowed to create events", {
-      status: 403
-    });
-  }
+  const user = (await auth());
 
   // const canHeCreateEvents = user.orgPermissions?.some((perm) => perm === "org:feature:event_create");
 
