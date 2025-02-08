@@ -33,7 +33,7 @@ export async function PUT(request: NextRequest) {
 
   const data = await request.json();
 
-  if(data.eventId == null || data.email == null || data.imageUrl == null ||fullName==null){
+  if(data.eventId == null || data.email == null || data.imageUrl == null){
     return new Response("data i snecessary");
   }
 
