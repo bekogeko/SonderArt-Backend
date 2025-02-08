@@ -7,6 +7,7 @@ export async function GET(request: Request) {
   // const events = await db.select().from(eventTable);
   const events = await db.select().from(eventTable);
 
+  console.log(request);
   // send json
   return new Response(JSON.stringify(events), {
     headers: {
@@ -38,9 +39,7 @@ export async function PUT(request: Request) {
   
   const result = await db.insert(eventTable).values({
     name: event.name,
-    eventTime: new Date(),
-    created_at: new Date(),
-    publisher_id: userId,
+    publisher: (await auth()).userId as string,
   }).returning();
 
 
