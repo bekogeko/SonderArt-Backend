@@ -9,7 +9,7 @@ export const eventTable = pgTable("event", {
   eventTime : timestamp().notNull(),
 
   // Todo: fix code
-  publisher_id: integer().notNull(),
+  publisher_id: varchar({length:64}).notNull(),
 });
 
 export const userTable = pgTable("user", {
