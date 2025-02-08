@@ -14,7 +14,7 @@ export async function GET(request: Request) {
   });
 }
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
 
   // request.headers.
   await auth.protect();
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   if (user.userId == null){
     return new Response("Unauthorized", { status: 401 });
   }
-  
+
   // body with name
   // with eventTime
   // with created_at
