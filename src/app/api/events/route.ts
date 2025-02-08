@@ -3,7 +3,7 @@ import { eventTable } from "@/db/schema";
 
 export async function GET(request: Request) {
   console.log(request);
-  let events = await db.select().from(eventTable);
+  const events = await db.select().from(eventTable);
   console.log(events.length);
   return new Response(JSON.stringify(events), {
     headers: {
