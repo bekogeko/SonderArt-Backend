@@ -16,7 +16,7 @@ export async function PUT(request: Request) {
 
   // request.headers.
 
-  const canHeCreateEvents = (await auth()).orgPermissions?.some((perm) => perm === "CanCreateEvent");
+  const canHeCreateEvents = (await auth()).orgPermissions?.some((perm) => perm === "org:feature:event_create");
 
   if(!canHeCreateEvents){
     return new Response("You are not allowed to create events", {
