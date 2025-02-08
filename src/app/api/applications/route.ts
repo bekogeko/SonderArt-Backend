@@ -58,6 +58,7 @@ export async function PUT(request: NextRequest) {
       email: data.email,
       imageUrl: data.imageUrl,
       fullName: data.fullName,
+      desc: data.desc
     },
     omit:{
       eventId:true
